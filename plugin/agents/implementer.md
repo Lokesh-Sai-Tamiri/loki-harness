@@ -3,6 +3,7 @@ name: implementer
 description: Loki-Harness implementer. Builds one task at a time under the Ponytail necessity ladder and Simplicity/Surgical discipline, writing the failing test first and looping until it passes. Use to execute a single task from the task list once its brief is assembled. The orchestrator should spawn this on Opus for genuinely hard tasks.
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+color: green
 maxTurns: 60
 ---
 

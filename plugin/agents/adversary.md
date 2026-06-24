@@ -3,6 +3,7 @@ name: adversary
 description: Loki-Harness adversary agent. Assumes the current plan or diff is wrong and hunts for concrete, reproducible failures — never vague doubt. Produces gap artifacts the Planner must close, and also performs the final whole-diff review before handoff. Use in the plan-hardening mesh and as the last check before completion.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write
 model: opus
+color: red
 maxTurns: 30
 ---
 

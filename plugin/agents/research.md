@@ -3,6 +3,7 @@ name: research
 description: Loki-Harness research agent. Deep-dives the codebase and the web for a request, then writes findings to a file and returns only a distilled summary so the exploration never bloats the main context. Use whenever a request needs understanding of existing code, prior art, or external facts before planning.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write
 model: haiku
+color: blue
 maxTurns: 40
 ---
 
