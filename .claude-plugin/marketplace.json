@@ -1,0 +1,13 @@
+{
+  "name": "loki-harness",
+  "owner": {
+    "name": "Lokesh"
+  },
+  "plugins": [
+    {
+      "name": "loki-harness",
+      "source": "./plugin",
+      "description": "Generic, install-anywhere harness: /go routes every prompt through a model-tiered multi-agent pipeline (research -> grill -> plan -> adversary -> implement) with always-on engineering discipline."
+    }
+  ]
+}
