@@ -24,6 +24,16 @@ Installs globally and is available in every project. Requires Node.js ≥ 18 and
 
 `/go` is a per-session toggle: a SessionStart hook resets it each new session, so you type it once per session. The first `/go` in a fresh repo also bootstraps it — see below.
 
+### Strict mode (only your agents)
+
+`/go` runs in your normal session, which can still reach for Claude Code's built-in agents (Explore, Plan, general-purpose). For a hard guarantee that *only* the Loki-Harness agents run, launch the strict conductor instead:
+
+```
+claude --agent loki-conductor
+```
+
+Its `Agent(...)` allowlist makes the built-in agents unspawnable — it can spawn only the eight harness agents. Use `claude --agent loki-conductor` when you want determinism; use plain `/go` for everyday flow. Check the exact identifier with `claude agents` first — a plugin may register it as `loki-harness:loki-conductor`.
+
 ## How it works
 
 Three layers, by design:
@@ -66,14 +76,21 @@ Trivial prompts skip the pipeline and are answered directly. Standard prompts sk
 
 Haiku = triage / research / assembly. Sonnet = interview / plan / build. Opus = adversary / architecture / hard work. The Classifier and the router set the tier per prompt; each agent also pins its default model in frontmatter.
 
+### Using only harness agents (not the built-ins)
+
+The `/go` playbook names the exact harness agents and forbids the built-ins (Explore, Plan, general-purpose) — a strong nudge, but the session is still technically free to substitute. For the hard guarantee, use **Strict mode** (`claude --agent loki-conductor`, above) — its `Agent(...)` allowlist makes built-ins unspawnable. As a quick blunt alternative, `--disallowedTools` at startup can deny a specific built-in like Explore.
+
 ## First-run bootstrap
 
 The first `/go` in a repo with no `.claude/loki-harness/config.json`:
 
 1. Reads the codebase and infers the stack.
 2. Writes per-project config (test command, conventions) and a CONTEXT map into `.claude/loki-harness/`.
-3. Recommends any specialized stack skills, showing each with its source.
-4. Installs only the ones **you approve, one at a time**, then reloads.
+3. Asks which code-understanding layer to use — **always**, with a recommendation, never an auto-skip. Option (a) grep (built-in, fast, never stale); option (b) [Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) — a knowledge graph with name+meaning search and a diff/ripple impact view. The repo size only sets the *recommendation*; you make the call. Picking UA when it's not installed triggers an install via `/plugin` (never `curl | bash`) after your approval.
+4. Recommends any other specialized stack skills, showing each with its source.
+5. Installs only the ones **you approve, one at a time**, then reloads.
+
+The code-understanding step (3) is independent of config: it runs on any `/go` where no `"index"` decision is recorded yet — so a repo first set up by an older version still gets offered Understand-Anything once you update and run `/go` again. Once `"index"` is recorded it won't re-prompt unless the graph goes missing or stale.
 
 Loop exit is grounded (tests pass / zero surviving adversary findings / cap of 3 rounds), never a self-reported confidence number.
 

@@ -9,7 +9,7 @@ You are the Loki-Harness conductor, running as the main thread. Your `tools` all
 
 Drive the same pipeline as the `/go` command:
 
-1. **Activate + bootstrap.** `mkdir -p .claude/loki-harness && touch .claude/loki-harness/active`. If `config.json` is missing, scan the repo and write config + CONTEXT. If config has no `"index"` key (independent of whether config exists), run the code-understanding decision: offer Understand-Anything on a large/unfamiliar repo (explain it, its source, the scan cost; install only on explicit approval via `/plugin`, never `curl|bash`; then `/reload-plugins` and `/understand`), else record `"index": "grep"`.
+1. **Activate + bootstrap.** `mkdir -p .claude/loki-harness && touch .claude/loki-harness/active`. If `config.json` is missing, scan the repo and write config + CONTEXT. If config has no `"index"` key (independent of whether config exists), run the code-understanding decision: **always ask the user** which index to use — present grep vs Understand-Anything with a size-based recommendation, and never record `"index"` without their explicit choice (do not auto-skip even on small/familiar repos). If they pick UA and it's not installed, install only on approval via `/plugin` (never `curl|bash`), then `/reload-plugins` and `/understand`.
 2. **Classifier** (haiku) → `{size, tier, skip}`. trivial → answer directly; standard → skip Interview + mesh; deep → everything.
 3. **Research** (haiku) → distilled findings + file path (graph-first if indexed).
 4. **Interview** (sonnet, deep only).
