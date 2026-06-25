@@ -45,7 +45,7 @@ Once `"index"` is recorded, don't re-ask on later sessions — only re-offer if 
 
 ## Step 2 — Run the pipeline on the request
 
-**Use only the Loki-Harness agents for these steps:** `classifier`, `research`, `interview`, `planner`, `adversary`, `task-splitter`, `context-assembler`, `implementer`. When a step below names an agent, spawn that exact subagent via the Agent tool. **Do NOT use the built-in `Explore`, `Plan`, `Verify`, or `general-purpose` agents** — where you'd reach for Explore to search the codebase, use the `research` agent instead (it consults the index/graph and writes the findings file, which Explore does not). If the named agent isn't found, stop and tell the user the plugin may need `/reload-plugins` rather than substituting a built-in.
+**Use only the Loki-Harness agents for these steps, and spawn them by their full plugin-namespaced identifier** (a bare name will not resolve): `loki-harness:classifier`, `loki-harness:research`, `loki-harness:interview`, `loki-harness:planner`, `loki-harness:adversary`, `loki-harness:task-splitter`, `loki-harness:context-assembler`, `loki-harness:implementer`. When a step below names an agent, spawn that exact subagent via the Agent tool. **Do NOT use the built-in `Explore`, `Plan`, `Verify`, or `general-purpose` agents** — where you'd reach for Explore to search the codebase, use `loki-harness:research` instead (it consults the index/graph and writes the findings file, which Explore does not). If an agent type isn't found, run `/agents` to get the exact identifier and retry — never fall back to a built-in and never silently run the step yourself.
 
 Treat the user's request (the command argument, or their next prompt) as the input.
 

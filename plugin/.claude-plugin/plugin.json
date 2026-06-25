@@ -1,6 +1,6 @@
 {
   "name": "loki-harness",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A generic Claude Code harness. Type /go once per session and every prompt is routed through a gated, model-tiered multi-agent pipeline that turns a rough prompt into researched, grilled, plan-hardened, test-verified output. Always-on discipline (Karpathy principles, Ponytail necessity ladder, test/git guardrails) runs underneath via hooks.",
   "author": {
     "name": "Lokesh"
